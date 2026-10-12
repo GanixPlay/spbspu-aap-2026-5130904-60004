@@ -5,10 +5,10 @@ namespace ganev{
 }
 int main(){
   try{
-    std::cout << ganev::maxLenght();
+    std::cout << ganev::maxLenght() << "\n";
     return 0;
   } catch (const std::invalid_argument& e){
-    std::cout << e.what();
+    std::cout << e.what() << "\n";
     return 1;
   }
 }
