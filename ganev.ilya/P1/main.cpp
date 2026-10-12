@@ -2,7 +2,6 @@
 #include <stdexcept>
 #include <exception>
 
-
 namespace ganev
 {
   int maxLenght();
