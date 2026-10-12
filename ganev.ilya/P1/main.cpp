@@ -11,7 +11,7 @@ int main()
     std::cout << ganev::maxLenght();
     return 0;
   }
-  catch (const std::invalid_argument& e)
+  catch (const std::exception& e)
   {
     std::cout << e.what();
     return 1;
