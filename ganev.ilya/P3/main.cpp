@@ -160,9 +160,9 @@ namespace ganev
   {
     std::ofstream out(file);
     out << rows << " " << cols << "\n";
-    for (int i = 0; i < rows; i++)
+    for (size_t i = 0; i < rows; i++)
     {
-      for (int j = 0; j < cols; j++)
+      for (size_t j = 0; j < cols; j++)
       {
         out << m[i * rows + j] << " ";
       }
@@ -175,9 +175,9 @@ namespace ganev
   {
     std::ofstream out(file);
     out << rows << " " << cols << "\n";
-    for (int i = 0; i < rows; i++)
+    for (size_t i = 0; i < rows; i++)
     {
-      for (int j = 0; j < cols; j++)
+      for (size_t j = 0; j < cols; j++)
       {
         out << m[i][j] << " ";
       }
