@@ -5,14 +5,14 @@ const int MAX_LENGTH = 10000;
 
 namespace ganev
 {
-  void lft_top_clk(int* m, size_t rows, size_t cols);
-  void lft_top_clk(int** m, size_t rows, size_t cols);
+  void lftTopCkl(int* m, size_t rows, size_t cols);
+  void lftTopCkl(int** m, size_t rows, size_t cols);
   void outputMatrix(int* m, size_t rows, size_t cols, char* file);
   void outputMatrix(int** m, size_t rows, size_t cols, char* file);
 }
 int main(int argc, char* argv[])
 {
-  if ((*argv[1]!= '1' && *argv[1] != '2') || argc != 4 || argv[1][1])
+  if (argc != 4 || (*argv[1]!= '1' && *argv[1] != '2') || argv[1][1])
   {
     std::cout << "Invalid argument\n";
     return 1;
@@ -21,6 +21,12 @@ int main(int argc, char* argv[])
 
   std::fstream in(argv[2]);
   if (!(in >> n >> m) || !in)
+  {
+    std::cout << "Input error";
+    return 2;
+  }
+
+  if (n < 0 || m < 0)
   {
     std::cout << "Input error";
     return 2;
@@ -42,32 +48,38 @@ int main(int argc, char* argv[])
         return 2;
       }
     }
-    ganev::lft_top_clk(matrix, n, m);
+    ganev::lftTopCkl(matrix, n, m);
     ganev::outputMatrix(matrix, n, m, argv[3]);
   }
   else if(*argv[1] == '2')
   {
-    int ** matrix = new int*[n];
-    for (int i = 0; i < n; i++)
+    try
     {
-      matrix[i] = new int[m];
-      for (int j = 0; j < m; j++)
+      int** matrix = new int*[n];
+      for (int i = 0; i < n; i++)
       {
-        if (!(in >> matrix[i][j]))
+        matrix[i] = new int[m];
+        for (int j = 0; j < m; j++)
         {
-          std::cout << "Input error";
-          return 2;
+          if (!(in >> matrix[i][j]))
+          {
+            std::cout << "Input error";
+            return 2;
+          }
         }
       }
+      ganev::lftTopCkl(matrix, n, m);
+      ganev::outputMatrix(matrix, n, m, argv[3]);
+      for (int i = 0; i < n; i++)
+      {
+        delete[] matrix[i];
+      }
+      delete[] matrix;
     }
-    ganev::lft_top_clk(matrix, n, m);
-    ganev::outputMatrix(matrix, n, m, argv[3]);
-
-    for (int i = 0; i < n; i++)
+    catch(const std::bad_alloc& e)
     {
-      delete[] matrix[i];
+      std::cerr << e.what() << '\n';
     }
-    delete[] matrix;
 
   }
 
@@ -77,7 +89,7 @@ int main(int argc, char* argv[])
 
 namespace ganev
 {
-  void lft_top_clk(int* m, size_t rows, size_t cols)
+  void lftTopCkl(int* m, size_t rows, size_t cols)
   {
     int count = 1;
     int t = 0, b = rows - 1, l = 0, r = cols - 1;
@@ -118,7 +130,7 @@ namespace ganev
     }
   }
 
-  void lft_top_clk(int** m, size_t rows, size_t cols)
+  void lftTopCkl(int** m, size_t rows, size_t cols)
   {
     int count = 1;
     int t = 0, b = rows - 1, l = 0, r = cols - 1;
