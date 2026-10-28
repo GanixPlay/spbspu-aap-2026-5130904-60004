@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
   int n = 0, m = 0;
 
   std::fstream in(argv[2]);
-  if (!(in >> n >> m) || !in)
+  if (!in || !(in >> n >> m))
   {
     std::cout << "Input error";
     return 2;
@@ -59,11 +59,19 @@ int main(int argc, char* argv[])
       for (int i = 0; i < n; i++)
       {
         matrix[i] = new int[m];
+      }
+      for (int i = 0; i < n; i++)
+      {
         for (int j = 0; j < m; j++)
         {
           if (!(in >> matrix[i][j]))
           {
             std::cout << "Input error";
+            for (int i = 0; i < n; i++)
+            {
+              delete[] matrix[i];
+            }
+            delete[] matrix;
             return 2;
           }
         }
