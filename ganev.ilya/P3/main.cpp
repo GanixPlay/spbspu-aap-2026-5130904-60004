@@ -1,12 +1,14 @@
 #include <fstream>
 #include <iostream>
 
+const int MAX_LENGTH = 10000;
+
 namespace ganev
 {
-  void lft_top_clk(int *m, size_t rows, size_t cols);
-  void lft_top_clk(int ** m, size_t rows, size_t cols);
-  void outputMatrix(int *m, size_t rows, size_t cols, char* file);
-  void outputMatrix(int ** m, size_t rows, size_t cols, char* file);
+  void lft_top_clk(int* m, size_t rows, size_t cols);
+  void lft_top_clk(int** m, size_t rows, size_t cols);
+  void outputMatrix(int* m, size_t rows, size_t cols, char* file);
+  void outputMatrix(int** m, size_t rows, size_t cols, char* file);
 }
 int main(int argc, char* argv[])
 {
@@ -26,8 +28,8 @@ int main(int argc, char* argv[])
 
   if(*argv[1] == '1')
   {
-    int matrix[10000] = {};
-    if (n * m > 10000)
+    int matrix[MAX_LENGTH] = {};
+    if (n * m > MAX_LENGTH)
     {
       std::cout << "Input error";
       return 2;
@@ -75,7 +77,7 @@ int main(int argc, char* argv[])
 
 namespace ganev
 {
-  void lft_top_clk(int *m, size_t rows, size_t cols)
+  void lft_top_clk(int* m, size_t rows, size_t cols)
   {
     int count = 1;
     int t = 0, b = rows - 1, l = 0, r = cols - 1;
@@ -83,13 +85,13 @@ namespace ganev
     {
       for (int i = l; i <= r; i++)
       {
-        m[t * rows + i] -= count;
+        m[t * cols + i] -= count;
         count++;
       }
       t++;
       for (int j = t; j <= b; j++)
       {
-        m[j * rows + r] -= count;
+        m[j * cols + r] -= count;
         count++;
       }
       r--;
@@ -99,7 +101,7 @@ namespace ganev
       }
       for (int i = r; i >= l; i--)
       {
-        m[b * rows + i] -= count;
+        m[b * cols + i] -= count;
         count++;
       }
       if (l > r)
@@ -109,14 +111,14 @@ namespace ganev
       b--;
       for (int j = b; j >= t; j--)
       {
-        m[j * rows + l] -= count;
+        m[j * cols + l] -= count;
         count++;
       }
       l++;
     }
   }
 
-  void lft_top_clk(int ** m, size_t rows, size_t cols)
+  void lft_top_clk(int** m, size_t rows, size_t cols)
   {
     int count = 1;
     int t = 0, b = rows - 1, l = 0, r = cols - 1;
@@ -156,7 +158,7 @@ namespace ganev
       l++;
     }
   }
-  void outputMatrix(int * m, size_t rows, size_t cols, char* file)
+  void outputMatrix(int* m, size_t rows, size_t cols, char* file)
   {
     std::ofstream out(file);
     out << rows << " " << cols << "\n";
@@ -171,7 +173,7 @@ namespace ganev
     out.close();
   }
 
-  void outputMatrix(int ** m, size_t rows, size_t cols, char* file)
+  void outputMatrix(int** m, size_t rows, size_t cols, char* file)
   {
     std::ofstream out(file);
     out << rows << " " << cols << "\n";
