@@ -12,7 +12,7 @@ namespace ganev
 }
 int main(int argc, char* argv[])
 {
-  if (argc != 4 || (*argv[1]!= '1' && *argv[1] != '2') || argv[1][1])
+  if (argc != 4 || (*argv[1] != '1' && *argv[1] != '2') || argv[1][1])
   {
     std::cout << "Invalid argument\n";
     return 1;
@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
     return 2;
   }
 
-  if(*argv[1] == '1')
+  if (*argv[1] == '1')
   {
     int matrix[MAX_LENGTH] = {};
     if (n * m > MAX_LENGTH)
@@ -51,11 +51,11 @@ int main(int argc, char* argv[])
     ganev::lftTopCkl(matrix, n, m);
     ganev::outputMatrix(matrix, n, m, argv[3]);
   }
-  else if(*argv[1] == '2')
+  else if (*argv[1] == '2')
   {
     try
     {
-      int** matrix = new int*[n];
+      int** const matrix = new int*[n];
       for (int i = 0; i < n; i++)
       {
         matrix[i] = new int[m];
@@ -84,11 +84,10 @@ int main(int argc, char* argv[])
       }
       delete[] matrix;
     }
-    catch(const std::bad_alloc& e)
+    catch (const std::bad_alloc& e)
     {
       std::cerr << e.what() << '\n';
     }
-
   }
 
   in.close();
