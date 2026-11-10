@@ -3,7 +3,7 @@
 
 namespace ganev
 {
-  char* readString(std::istream &in);
+  char* readString(std::istream& in);
   void unicSymbols(const char* str1, const char* str2, char* res);
   bool isContain(const char* str, char let);
 }
@@ -14,21 +14,24 @@ int main()
   {
     string = ganev::readString(std::cin);
   }
-  catch(const std::exception& e)
+  catch (const std::exception& e)
   {
     std::cerr << e.what() << '\n';
     return 1;
   }
-  const char* string2 = "abc ef";
-  char* result = new char[std::strlen(string) + std::strlen(string2) + 1];
+
+  const char* const string2 = "abc ef";
+  char* const result = new char[std::strlen(string) + std::strlen(string2) + 1];
   ganev::unicSymbols(string, string2, result);
   std::cout << result;
+  delete[] string;
+  delete[] result;
 }
 
-char* ganev::readString(std::istream &in)
+char* ganev::readString(std::istream& in)
 {
   char* line = new char[0];
-  char c;
+  char c = '\0';
   int index = 0;
   while (in.get(c))
   {
@@ -37,7 +40,7 @@ char* ganev::readString(std::istream &in)
     {
       appended = new char[index + 1];
     }
-    catch(const std::bad_alloc& e)
+    catch (const std::bad_alloc& e)
     {
       delete[] line;
       throw "Memory error";
