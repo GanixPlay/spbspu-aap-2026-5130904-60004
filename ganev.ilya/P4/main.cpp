@@ -30,7 +30,7 @@ int main()
 
 char* ganev::readString(std::istream& in)
 {
-  char* line = new char[0];
+  char* line = new char[1];
   char c = '\0';
   int index = 0;
   while (in.get(c))
@@ -38,7 +38,7 @@ char* ganev::readString(std::istream& in)
     char* appended = nullptr;
     try
     {
-      appended = new char[index + 1];
+      appended = new char[index + 2];
     }
     catch (const std::bad_alloc& e)
     {
