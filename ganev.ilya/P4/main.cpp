@@ -1,0 +1,92 @@
+#include <iostream>
+#include <cstring>
+
+namespace ganev
+{
+  char* readString(std::istream &in);
+  void unicSymbols(const char* str1, const char* str2, char* res);
+  bool isContain(const char* str, char let);
+}
+int main()
+{
+  char* string = nullptr;
+  try
+  {
+    string = ganev::readString(std::cin);
+  }
+  catch(const std::exception& e)
+  {
+    std::cerr << e.what() << '\n';
+    return 1;
+  }
+  
+  const char* string2 = "abc ef";
+  char* result = new char[std::strlen(string) + std::strlen(string2) + 1];
+  ganev::unicSymbols(string, string2, result);
+  std::cout << result;
+}
+
+char* ganev::readString(std::istream &in)
+{
+  char* line = new char[0];
+  char c;
+  int index = 0;
+  while (in.get(c))
+  {
+    char* appended = nullptr;
+    try
+    {
+      appended = new char[index + 1];
+    }
+    catch(const std::bad_alloc& e)
+    {
+      delete[] line;
+      throw "Memory error";
+    }
+    
+    for (int i = 0; i < index; i++)
+    {
+      appended[i] = line[i];
+    }
+    appended[index] = c;
+    delete[] line;
+    line = appended;
+    index++;
+  }
+  line[index] = '\0';
+  return line;
+}
+
+void ganev::unicSymbols(const char* str1, const char* str2, char* res)
+{
+  int index = 0;
+  for (const char* let = str1; *let; let++)
+  {
+    if (!ganev::isContain(str2, *let))
+    {
+      res[index] = *let;
+      index++;
+    }
+  }
+  for (const char* let = str2; *let; let++)
+  {
+    if (!ganev::isContain(str1, *let))
+    {
+      res[index] = *let;
+      index++;
+    }
+  }
+  res[index] = '\0';
+}
+
+bool ganev::isContain(const char* str, char let)
+{
+  for (const char* i = str; *i; i++)
+  {
+    if (*i == let || let == '\n')
+    {
+      return true;
+    }
+  }
+  return false;
+}
