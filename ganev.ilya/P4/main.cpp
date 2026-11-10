@@ -20,6 +20,13 @@ int main()
     return 1;
   }
 
+  if (string == nullptr || string[0] == '\0')
+  {
+    std::cerr << "Empty input";
+    delete[] string;
+    return 1;
+  }
+
   const char* const string2 = "abc ef";
   char* const result = new char[std::strlen(string) + std::strlen(string2) + 1];
   ganev::unicSymbols(string, string2, result);
