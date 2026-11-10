@@ -19,7 +19,6 @@ int main()
     std::cerr << e.what() << '\n';
     return 1;
   }
-  
   const char* string2 = "abc ef";
   char* result = new char[std::strlen(string) + std::strlen(string2) + 1];
   ganev::unicSymbols(string, string2, result);
@@ -43,7 +42,6 @@ char* ganev::readString(std::istream &in)
       delete[] line;
       throw "Memory error";
     }
-    
     for (int i = 0; i < index; i++)
     {
       appended[i] = line[i];
