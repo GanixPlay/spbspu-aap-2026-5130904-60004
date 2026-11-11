@@ -1,9 +1,11 @@
 #include <iostream>
 #include <cstring>
+#include <stdexcept>
 
 namespace ganev
 {
   char* readString(std::istream& in);
+  char* appendChar(const char* string, char let, int new_size);
   void unicSymbols(const char* str1, const char* str2, char* res);
   bool isContain(const char* str, char let);
 }
@@ -42,27 +44,32 @@ char* ganev::readString(std::istream& in)
   int index = 0;
   while (in.get(c))
   {
-    char* appended = nullptr;
-    try
-    {
-      appended = new char[index + 2];
-    }
-    catch (const std::bad_alloc& e)
-    {
-      delete[] line;
-      throw "Memory error";
-    }
-    for (int i = 0; i < index; i++)
-    {
-      appended[i] = line[i];
-    }
-    appended[index] = c;
-    delete[] line;
-    line = appended;
+    line = ganev:: appendChar(line, c, index + 1);
     index++;
   }
-  line[index] = '\0';
+  line = ganev::appendChar(line, '\0', index + 1);
   return line;
+}
+
+char* ganev::appendChar(const char* string, char let, int new_size)
+{
+  char* appended = nullptr;
+  try
+  {
+    appended = new char[new_size];
+  }
+  catch (const std::bad_alloc& e)
+  {
+    delete[] string;
+    throw std::runtime_error("Memory error");
+  }
+  for (int i = 0; i < new_size - 1; i++)
+  {
+    appended[i] = string[i];
+  }
+  appended[new_size - 1] = let;
+  delete[] string;
+  return appended;
 }
 
 void ganev::unicSymbols(const char* str1, const char* str2, char* res)
