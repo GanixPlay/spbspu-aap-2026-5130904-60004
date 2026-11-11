@@ -44,7 +44,7 @@ char* ganev::readString(std::istream& in)
   int index = 0;
   while (in.get(c))
   {
-    line = ganev:: appendChar(line, c, index + 1);
+    line = ganev::appendChar(line, c, index + 1);
     index++;
   }
   line = ganev::appendChar(line, '\0', index + 1);
